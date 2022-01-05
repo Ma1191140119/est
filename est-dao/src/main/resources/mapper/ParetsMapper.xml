@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.est.mapper.ParetsMapper">
+
+    <select id="getParetsById" resultType="cn.est.po.Parets">
+        select
+                id as id,
+                modelId as modelId,
+                paretsName as paretsName,
+                price as price,
+                supplier as supplier,
+                img as img,
+                isOrign as isOrign,
+                createdUserId as createdUserId,
+                updatedUserId as updatedUserId,
+                creatdTime as creatdTime,
+                updatedTime as updatedTime,
+                isDelete as isDelete
+        from parets
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getParetsListByMap" resultType="cn.est.po.Parets" parameterType="java.util.Map">
+        select
+                id as id,
+                modelId as modelId,
+                paretsName as paretsName,
+                price as price,
+                supplier as supplier,
+                img as img,
+                isOrign as isOrign,
+                createdUserId as createdUserId,
+                updatedUserId as updatedUserId,
+                creatdTime as creatdTime,
+                updatedTime as updatedTime,
+                isDelete as isDelete
+        from parets
+        <trim prefix="where" prefixOverrides="and | or">
+                    <if test="id != null">
+                        and id=#{id}
+                    </if>
+                    <if test="modelId != null">
+                        and modelId=#{modelId}
+                    </if>
+                    <if test="paretsName != null and paretsName!=''">
+                        and paretsName=#{paretsName}
+                    </if>
+                    <if test="price != null">
+                        and price=#{price}
+                    </if>
+                    <if test="supplier != null and supplier!=''">
+                        and supplier=#{supplier}
+                    </if>
+                    <if test="img != null and img!=''">
+                        and img=#{img}
+                    </if>
+                    <if test="isOrign != null">
+                        and isOrign=#{isOrign}
+                    </if>
+                    <if test="createdUserId != null">
+                        and createdUserId=#{createdUserId}
+                    </if>
+                    <if test="updatedUserId != null">
+                        and updatedUserId=#{updatedUserId}
+                    </if>
+                    <if test="null!=creatdTime">
+                        and creatdTime=#{creatdTime}
+                    </if>
+                    <if test="null!=updatedTime">
+                        and updatedTime=#{updatedTime}
+                    </if>
+                    <if test="isDelete != null">
+                        and isDelete=#{isDelete}
+                    </if>
+        </trim>
+        <if test="beginPos != null and pageSize != null ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getParetsCountByMap" resultType="Integer"  parameterType="java.util.Map">
+        select count(*) from parets
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="id != null">
+                    and id=#{id}
+                </if>
+                <if test="modelId != null">
+                    and modelId=#{modelId}
+                </if>
+                <if test="paretsName != null and paretsName!=''">
+                    and paretsName=#{paretsName}
+                </if>
+                <if test="price != null">
+                    and price=#{price}
+                </if>
+                <if test="supplier != null and supplier!=''">
+                    and supplier=#{supplier}
+                </if>
+                <if test="img != null and img!=''">
+                    and img=#{img}
+                </if>
+                <if test="isOrign != null">
+                    and isOrign=#{isOrign}
+                </if>
+                <if test="createdUserId != null">
+                    and createdUserId=#{createdUserId}
+                </if>
+                <if test="updatedUserId != null">
+                    and updatedUserId=#{updatedUserId}
+                </if>
+                <if test="null!=creatdTime">
+                    and creatdTime=#{creatdTime}
+                </if>
+                <if test="null!=updatedTime">
+                    and updatedTime=#{updatedTime}
+                </if>
+                <if test="isDelete != null">
+                    and isDelete=#{isDelete}
+                </if>
+        </trim>
+    </select>
+
+    <insert id="insertParets" parameterType="cn.est.po.Parets">
+        insert into parets(
+                        modelId,
+                        paretsName,
+                        price,
+                        supplier,
+                        img,
+                        isOrign,
+                        createdUserId,
+                        updatedUserId,
+                        creatdTime,
+                        updatedTime,
+                        isDelete)
+        values(
+                     #{modelId},
+                     #{paretsName},
+                     #{price},
+                     #{supplier},
+                     #{img},
+                     #{isOrign},
+                     #{createdUserId},
+                     #{updatedUserId},
+                     #{creatdTime},
+                     #{updatedTime},
+                    #{isDelete})
+    </insert>
+
+    <update id="updateParets" parameterType="cn.est.po.Parets">
+        update parets
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+                            <if test="modelId != null">
+                                modelId=#{modelId},
+                            </if>
+                            <if test="paretsName != null and paretsName!=''">
+                                paretsName=#{paretsName},
+                            </if>
+                            <if test="price != null">
+                                price=#{price},
+                            </if>
+                            <if test="supplier != null and supplier!=''">
+                                supplier=#{supplier},
+                            </if>
+                            <if test="img != null and img!=''">
+                                img=#{img},
+                            </if>
+                            <if test="isOrign != null">
+                                isOrign=#{isOrign},
+                            </if>
+                            <if test="createdUserId != null">
+                                createdUserId=#{createdUserId},
+                            </if>
+                            <if test="updatedUserId != null">
+                                updatedUserId=#{updatedUserId},
+                            </if>
+                            <if test="creatdTime != null">
+                                creatdTime=#{creatdTime},
+                            </if>
+                            <if test="updatedTime != null">
+                                updatedTime=#{updatedTime},
+                            </if>
+                            <if test="isDelete != null">
+                                isDelete=#{isDelete}
+                            </if>
+        </trim>
+    </update>
+
+    <delete id="deleteParetsById" parameterType="String">
+        delete from parets where id = #{id}
+    </delete>
+
+    <delete id="batchDeleteParets" parameterType="java.util.Map">
+        delete from parets where id in (
+            <foreach collection="ids" item="id" separator=",">
+                    #{id}
+            </foreach>
+        )
+    </delete>
+</mapper>

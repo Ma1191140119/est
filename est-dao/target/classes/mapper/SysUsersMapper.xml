@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.est.mapper.SysUsersMapper">
+
+    <select id="getSysUsersById" resultType="cn.est.po.SysUsers">
+        select
+                id as id,
+                account as account,
+                password as password,
+                salt as salt,
+                userName as userName,
+                role as role,
+                shopId as shopId,
+                createdUserId as createdUserId,
+                updatedUserId as updatedUserId,
+                creatdTime as creatdTime,
+                updatedTime as updatedTime,
+                isDelete as isDelete
+        from sys_users
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getSysUsersListByMap" resultType="cn.est.po.SysUsers" parameterType="java.util.Map">
+        select
+                id as id,
+                account as account,
+                password as password,
+                salt as salt,
+                userName as userName,
+                role as role,
+                shopId as shopId,
+                createdUserId as createdUserId,
+                updatedUserId as updatedUserId,
+                creatdTime as creatdTime,
+                updatedTime as updatedTime,
+                isDelete as isDelete
+        from sys_users
+        <trim prefix="where" prefixOverrides="and | or">
+                    <if test="id != null">
+                        and id=#{id}
+                    </if>
+                    <if test="account != null and account!=''">
+                        and account=#{account}
+                    </if>
+                    <if test="password != null and password!=''">
+                        and password=#{password}
+                    </if>
+                    <if test="salt != null and salt!=''">
+                        and salt=#{salt}
+                    </if>
+                    <if test="userName != null and userName!=''">
+                        and userName=#{userName}
+                    </if>
+                    <if test="role != null">
+                        and role=#{role}
+                    </if>
+                    <if test="shopId != null">
+                        and shopId=#{shopId}
+                    </if>
+                    <if test="createdUserId != null">
+                        and createdUserId=#{createdUserId}
+                    </if>
+                    <if test="updatedUserId != null">
+                        and updatedUserId=#{updatedUserId}
+                    </if>
+                    <if test="null!=creatdTime">
+                        and creatdTime=#{creatdTime}
+                    </if>
+                    <if test="null!=updatedTime">
+                        and updatedTime=#{updatedTime}
+                    </if>
+                    <if test="isDelete != null">
+                        and isDelete=#{isDelete}
+                    </if>
+        </trim>
+        <if test="beginPos != null and pageSize != null ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getSysUsersCountByMap" resultType="Integer"  parameterType="java.util.Map">
+        select count(*) from sys_users
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="id != null">
+                    and id=#{id}
+                </if>
+                <if test="account != null and account!=''">
+                    and account=#{account}
+                </if>
+                <if test="password != null and password!=''">
+                    and password=#{password}
+                </if>
+                <if test="salt != null and salt!=''">
+                    and salt=#{salt}
+                </if>
+                <if test="userName != null and userName!=''">
+                    and userName=#{userName}
+                </if>
+                <if test="role != null">
+                    and role=#{role}
+                </if>
+                <if test="shopId != null">
+                    and shopId=#{shopId}
+                </if>
+                <if test="createdUserId != null">
+                    and createdUserId=#{createdUserId}
+                </if>
+                <if test="updatedUserId != null">
+                    and updatedUserId=#{updatedUserId}
+                </if>
+                <if test="null!=creatdTime">
+                    and creatdTime=#{creatdTime}
+                </if>
+                <if test="null!=updatedTime">
+                    and updatedTime=#{updatedTime}
+                </if>
+                <if test="isDelete != null">
+                    and isDelete=#{isDelete}
+                </if>
+        </trim>
+    </select>
+
+    <insert id="insertSysUsers" parameterType="cn.est.po.SysUsers">
+        insert into sys_users(
+                        account,
+                        password,
+                        salt,
+                        userName,
+                        role,
+                        shopId,
+                        createdUserId,
+                        updatedUserId,
+                        creatdTime,
+                        updatedTime,
+                        isDelete)
+        values(
+                     #{account},
+                     #{password},
+                     #{salt},
+                     #{userName},
+                     #{role},
+                     #{shopId},
+                     #{createdUserId},
+                     #{updatedUserId},
+                     #{creatdTime},
+                     #{updatedTime},
+                    #{isDelete})
+    </insert>
+
+    <update id="updateSysUsers" parameterType="cn.est.po.SysUsers">
+        update sys_users
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+                            <if test="account != null and account!=''">
+                                account=#{account},
+                            </if>
+                            <if test="password != null and password!=''">
+                                password=#{password},
+                            </if>
+                            <if test="salt != null and salt!=''">
+                                salt=#{salt},
+                            </if>
+                            <if test="userName != null and userName!=''">
+                                userName=#{userName},
+                            </if>
+                            <if test="role != null">
+                                role=#{role},
+                            </if>
+                            <if test="shopId != null">
+                                shopId=#{shopId},
+                            </if>
+                            <if test="createdUserId != null">
+                                createdUserId=#{createdUserId},
+                            </if>
+                            <if test="updatedUserId != null">
+                                updatedUserId=#{updatedUserId},
+                            </if>
+                            <if test="creatdTime != null">
+                                creatdTime=#{creatdTime},
+                            </if>
+                            <if test="updatedTime != null">
+                                updatedTime=#{updatedTime},
+                            </if>
+                            <if test="isDelete != null">
+                                isDelete=#{isDelete}
+                            </if>
+        </trim>
+    </update>
+
+    <delete id="deleteSysUsersById" parameterType="String">
+        delete from sys_users where id = #{id}
+    </delete>
+
+    <delete id="batchDeleteSysUsers" parameterType="java.util.Map">
+        delete from sys_users where id in (
+            <foreach collection="ids" item="id" separator=",">
+                    #{id}
+            </foreach>
+        )
+    </delete>
+</mapper>

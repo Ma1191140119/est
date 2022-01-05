@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.est.mapper.MenusMapper">
+
+    <select id="getMenusById" resultType="cn.est.po.Menus">
+        select
+                id as id,
+                menuCode as menuCode,
+                menuName as menuName,
+                url as url,
+                status as status,
+                createdUserId as createdUserId,
+                updatedUserId as updatedUserId,
+                creatdTime as creatdTime,
+                updatedTime as updatedTime,
+                isDelete as isDelete
+        from menus
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getMenusListByMap" resultType="cn.est.po.Menus" parameterType="java.util.Map">
+        select
+                id as id,
+                menuCode as menuCode,
+                menuName as menuName,
+                url as url,
+                status as status,
+                createdUserId as createdUserId,
+                updatedUserId as updatedUserId,
+                creatdTime as creatdTime,
+                updatedTime as updatedTime,
+                isDelete as isDelete
+        from menus
+        <trim prefix="where" prefixOverrides="and | or">
+                    <if test="id != null">
+                        and id=#{id}
+                    </if>
+                    <if test="menuCode != null and menuCode!=''">
+                        and menuCode=#{menuCode}
+                    </if>
+                    <if test="menuName != null and menuName!=''">
+                        and menuName=#{menuName}
+                    </if>
+                    <if test="url != null and url!=''">
+                        and url=#{url}
+                    </if>
+                    <if test="status != null">
+                        and status=#{status}
+                    </if>
+                    <if test="createdUserId != null">
+                        and createdUserId=#{createdUserId}
+                    </if>
+                    <if test="updatedUserId != null">
+                        and updatedUserId=#{updatedUserId}
+                    </if>
+                    <if test="null!=creatdTime">
+                        and creatdTime=#{creatdTime}
+                    </if>
+                    <if test="null!=updatedTime">
+                        and updatedTime=#{updatedTime}
+                    </if>
+                    <if test="isDelete != null">
+                        and isDelete=#{isDelete}
+                    </if>
+        </trim>
+        <if test="beginPos != null and pageSize != null ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getMenusCountByMap" resultType="Integer"  parameterType="java.util.Map">
+        select count(*) from menus
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="id != null">
+                    and id=#{id}
+                </if>
+                <if test="menuCode != null and menuCode!=''">
+                    and menuCode=#{menuCode}
+                </if>
+                <if test="menuName != null and menuName!=''">
+                    and menuName=#{menuName}
+                </if>
+                <if test="url != null and url!=''">
+                    and url=#{url}
+                </if>
+                <if test="status != null">
+                    and status=#{status}
+                </if>
+                <if test="createdUserId != null">
+                    and createdUserId=#{createdUserId}
+                </if>
+                <if test="updatedUserId != null">
+                    and updatedUserId=#{updatedUserId}
+                </if>
+                <if test="null!=creatdTime">
+                    and creatdTime=#{creatdTime}
+                </if>
+                <if test="null!=updatedTime">
+                    and updatedTime=#{updatedTime}
+                </if>
+                <if test="isDelete != null">
+                    and isDelete=#{isDelete}
+                </if>
+        </trim>
+    </select>
+
+    <insert id="insertMenus" parameterType="cn.est.po.Menus">
+        insert into menus(
+                        menuCode,
+                        menuName,
+                        url,
+                        status,
+                        createdUserId,
+                        updatedUserId,
+                        creatdTime,
+                        updatedTime,
+                        isDelete)
+        values(
+                     #{menuCode},
+                     #{menuName},
+                     #{url},
+                     #{status},
+                     #{createdUserId},
+                     #{updatedUserId},
+                     #{creatdTime},
+                     #{updatedTime},
+                    #{isDelete})
+    </insert>
+
+    <update id="updateMenus" parameterType="cn.est.po.Menus">
+        update menus
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+                            <if test="menuCode != null and menuCode!=''">
+                                menuCode=#{menuCode},
+                            </if>
+                            <if test="menuName != null and menuName!=''">
+                                menuName=#{menuName},
+                            </if>
+                            <if test="url != null and url!=''">
+                                url=#{url},
+                            </if>
+                            <if test="status != null">
+                                status=#{status},
+                            </if>
+                            <if test="createdUserId != null">
+                                createdUserId=#{createdUserId},
+                            </if>
+                            <if test="updatedUserId != null">
+                                updatedUserId=#{updatedUserId},
+                            </if>
+                            <if test="creatdTime != null">
+                                creatdTime=#{creatdTime},
+                            </if>
+                            <if test="updatedTime != null">
+                                updatedTime=#{updatedTime},
+                            </if>
+                            <if test="isDelete != null">
+                                isDelete=#{isDelete}
+                            </if>
+        </trim>
+    </update>
+
+    <delete id="deleteMenusById" parameterType="String">
+        delete from menus where id = #{id}
+    </delete>
+
+    <delete id="batchDeleteMenus" parameterType="java.util.Map">
+        delete from menus where id in (
+            <foreach collection="ids" item="id" separator=",">
+                    #{id}
+            </foreach>
+        )
+    </delete>
+</mapper>
