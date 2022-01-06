@@ -11,6 +11,8 @@ import cn.est.utils.UrlUtils;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -69,7 +71,7 @@ public class LoginController {
         //tokenUsers
         String token = StringUtil.createToken();
         redisUtils.set(token, JSONObject.toJSONString(user));
-        redisUtils.delete(codeKey);//删除之前的验证码
+       // redisUtils.delete(codeKey);//删除之前的验证码
         //3.2存在：登录,不存在：注册
         return ResultUtils.returnDataSuccess(StringUtil.createSimpleMap("token", token));
     }
@@ -121,5 +123,13 @@ public class LoginController {
         redisUtils.set(access_token, JSONObject.toJSONString(user));
         response.sendRedirect("/?token="+access_token);
     }
+
+    @PostMapping("/info")
+    public Result info(HttpServletRequest request){
+        String token = request.getHeader("token");
+        Users loginUser = redisUtils.getJson(token, Users.class);
+        return ResultUtils.returnDataSuccess(loginUser);
+    }
+
 
 }

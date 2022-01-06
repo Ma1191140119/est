@@ -89,7 +89,7 @@
         </if>
     </select>
 
-    <select id="getAppointmentCountByMap" resultType="Integer"  parameterType="java.util.Map">
+    <select id="getAppointmentCountByMap" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(*) from appointment
         <trim prefix="where" prefixOverrides="and | or">
                 <if test="id != null">
